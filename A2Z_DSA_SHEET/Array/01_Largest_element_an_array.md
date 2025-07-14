@@ -8,6 +8,7 @@
 ![Space Complexity](https://img.shields.io/badge/Space-O(1)-red?style=for-the-badge)
 
 **🔗 [Solve on GeeksforGeeks](https://www.geeksforgeeks.org/problems/largest-element-in-array4009/1)**
+**📖 [Explanation on TakeUForward](https://takeuforward.org/data-structure/find-the-largest-element-in-an-array/)**
 
 </div>
 
@@ -29,52 +30,36 @@ Explanation: The largest element is 5.
 ### Topics Covered:
 - 📊 **Arrays**: Basic array traversal and manipulation
 - 🔍 **Linear Search**: Sequential element comparison
-- 🧮 **Mathematical Logic**: Finding maximum value
+- � **Mathematical Logic**: Finding maximum value
 
 ---
 
 ## 💻 C++ Implementation
 
-### Approach 1: Linear Search (Optimal)
+### Optimal Approach: Linear Search
 
 ```cpp
 #include <iostream>
 #include <vector>
-#include <climits>
 using namespace std;
 
 class Solution {
 public:
     /**
-     * Function to find the largest element in the array
+     * Finds the largest element in the array
      * @param arr: input array
-     * @return: largest element in the array
+     * @return: largest element
      */
     int largest(vector<int>& arr) {
-        // Initialize max with the first element
+        // Start by assuming first element is largest
         int maxElement = arr[0];
         
-        // Traverse the array starting from second element
+        // Check each element starting from the second one
         for (int i = 1; i < arr.size(); i++) {
-            // Update maxElement if current element is larger
+            // If current element is bigger, update maxElement
             if (arr[i] > maxElement) {
                 maxElement = arr[i];
             }
-        }
-        
-        return maxElement;
-    }
-};
-
-// Alternative approach using INT_MIN initialization
-class SolutionAlternative {
-public:
-    int largest(vector<int>& arr) {
-        int maxElement = INT_MIN;  // Initialize with smallest possible integer
-        
-        // Traverse entire array
-        for (int i = 0; i < arr.size(); i++) {
-            maxElement = max(maxElement, arr[i]);  // Use built-in max function
         }
         
         return maxElement;
@@ -226,84 +211,6 @@ Input Array: n integers = O(n) space
 Extra Variables: 1 integer (maxElement) = O(1) space
 Total Auxiliary Space: O(1)
 ```
-
----
-
-## 🚀 Approach Evolution: Brute Force to Optimal
-
-### 1. Brute Force Approach (Not Recommended)
-```cpp
-// Inefficient approach - comparing each element with all others
-int largest(vector<int>& arr) {
-    for (int i = 0; i < arr.size(); i++) {
-        bool isLargest = true;
-        for (int j = 0; j < arr.size(); j++) {
-            if (arr[j] > arr[i]) {
-                isLargest = false;
-                break;
-            }
-        }
-        if (isLargest) return arr[i];
-    }
-    return -1; // Should never reach here for valid input
-}
-```
-- **Time Complexity**: O(n²)
-- **Space Complexity**: O(1)
-- **Why Inefficient?**: Unnecessary nested loops and multiple comparisons
-
-### 2. Sorting Approach (Overkill)
-```cpp
-// Sorting approach - overkill for this problem
-int largest(vector<int>& arr) {
-    sort(arr.begin(), arr.end());  // O(n log n)
-    return arr[arr.size() - 1];    // Last element after sorting
-}
-```
-- **Time Complexity**: O(n log n)
-- **Space Complexity**: O(1) or O(n) depending on sorting algorithm
-- **Why Overkill?**: Sorting is unnecessary when we only need the maximum
-
-### 3. Optimal Approach (Linear Search) ✅
-```cpp
-// Most efficient approach
-int largest(vector<int>& arr) {
-    int maxElement = arr[0];
-    for (int i = 1; i < arr.size(); i++) {
-        if (arr[i] > maxElement) {
-            maxElement = arr[i];
-        }
-    }
-    return maxElement;
-}
-```
-- **Time Complexity**: O(n)
-- **Space Complexity**: O(1)
-- **Why Optimal?**: Single pass, minimal space, direct solution
-
----
-
-## 💡 Intuition Behind the Solution
-
-### The Core Idea:
-> "To find the largest element, we need to see all elements at least once and remember the largest one we've seen so far."
-
-### Mental Model:
-Think of this problem like finding the tallest person in a line:
-1. Start by assuming the first person is the tallest
-2. Move down the line, comparing each person's height with your current "tallest"
-3. Whenever you find someone taller, update your "tallest person"
-4. After checking everyone, you'll have the actual tallest person
-
-### Why This Works:
-- **Transitivity**: If A > B and B > C, then A > C
-- **Optimal Substructure**: The maximum of the entire array is either the first element or the maximum of the remaining elements
-- **Greedy Strategy**: We can make the locally optimal choice (keeping track of maximum so far) to reach the globally optimal solution
-
-### Key Realizations:
-1. **Single Pass Sufficiency**: We don't need to revisit elements
-2. **Comparison Strategy**: Each element only needs to be compared once with the current maximum
-3. **Memory Efficiency**: We only need to remember one value (current maximum)
 
 ---
 
