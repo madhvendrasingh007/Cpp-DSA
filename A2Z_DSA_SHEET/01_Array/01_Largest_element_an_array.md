@@ -1,6 +1,3 @@
-# 🔍 Find the Largest Element in an Array
-
-
 # 🔄 Check If Array Is Sorted and Rotated
 
 <div align="center">
@@ -8,353 +5,230 @@
 ![Difficulty](https://img.shields.io/badge/Difficulty-🟢%20Easy-brightgreen?style=for-the-badge)
 ![Topics](https://img.shields.io/badge/Topics-Array%20|%20Two%20Pointers-blue?style=for-the-badge)
 
-**🔗 [Solve on LeetCode](https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/)**
+[![LeetCode](https://img.shields.io/badge/Solve%20on-LeetCode-black?logo=leetcode\&style=for-the-badge)](https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/description/)
+[![Striver](https://img.shields.io/badge/📖%20Striver-Tutorial-orange?style=for-the-badge)](https://takeuforward.org/data-structure/find-the-largest-element-in-an-array/practice)
 
-**📖 [Striver Tutorial](https://takeuforward.org/data-structure/find-the-largest-element-in-an-array/practice)**
+</div>  
 
-</div>
-
-
+---
 
 ## 📋 Problem Statement
 
-**Given an array arr[], the task is to find the largest element and return it.**
+You are given an array `nums`. Return **true** if the array was originally sorted in **non-decreasing order** and then rotated **some number of times (possibly zero)**. Otherwise, return **false**.
 
-### Examples:
+👉 **Note:** The array may contain duplicates.
 
-```
-Example 1:
-Input: arr[] = [1, 8, 7, 56, 90]
-Output: 90
-Explanation: The largest element of the given array is 90.
+---
 
-Example 2:
-Input: arr[] = [5, 5, 5, 5]
-Output: 5
-Explanation: The largest element of the given array is 5.
-
-Example 3:
-Input: arr[] = [10]
-Output: 10
-Explanation: There is only one element which is the largest.
-```
-
-### Constraints:
-- `1 <= nums.length <= 100`
-- `1 <= nums[i] <= 100`
-
-***
-
-## 🔄 Algorithm
+### 🔹 Examples
 
 ```
-ALGORITHM: FindLargestElement
-INPUT: Array arr[] of size n
-OUTPUT: Largest element in the array
+Input: nums = [3,4,5,1,2]  
+Output: true  
+Explanation: [1,2,3,4,5] rotated by 3 → [3,4,5,1,2]  
 
-BEGIN
-    1. IF n == 0 THEN
-           RETURN -1 or handle empty array
-       END IF
-    
-    2. Initialize max = arr[0]                   // Assume first element is largest
-    
-    3. FOR i = 1 TO n-1 DO                      // Start from second element
-           IF arr[i] > max THEN                 // Found larger element
-               max = arr[i]                     // Update maximum
-           END IF
-       END FOR
-    
-    4. RETURN max                               // Return the largest element
-END
+Input: nums = [2,1,3,4]  
+Output: false  
+
+Input: nums = [1,2,3]  
+Output: true  
 ```
 
-### Pseudocode:
-```
-function findLargest(arr):
-    if arr.length == 0:
-        return null
-    
-    max = arr[0]
-    
-    for i from 1 to arr.length-1:
-        if arr[i] > max:
-            max = arr[i]
-    
-    return max
-```
+---
 
-***
+### 🔹 Constraints
 
-## 📊 Visual Diagram
+* `1 <= nums.length <= 100`
+* `1 <= nums[i] <= 100`
 
-### Case 1: Finding Maximum in `[2, 5, 1, 3, 0]`
-```
-Array: [2, 5, 1, 3, 0]
-Index:  0  1  2  3  4
+---
 
-Step-by-step traversal:
-┌─────┬─────┬─────┬─────┬─────┐
-│  2  │  5  │  1  │  3  │  0  │
-└─────┴─────┴─────┴─────┴─────┘
+## 🏹 Optimal Approach (C++)
 
-Initial: max = 2 (arr[0])
-
-i=1: arr[1] = 5
-     5 > 2? YES ✓
-     max = 5
-
-i=2: arr[2] = 1  
-     1 > 5? NO ✗
-     max = 5 (unchanged)
-
-i=3: arr[3] = 3
-     3 > 5? NO ✗  
-     max = 5 (unchanged)
-
-i=4: arr[4] = 0
-     0 > 5? NO ✗
-     max = 5 (unchanged)
-
-Final Result: max = 5 ✅
-```
-
-### Case 2: All Elements Same `[7, 7, 7]`
-```
-Array: [7, 7, 7]
-Index:  0  1  2
-
-┌─────┬─────┬─────┐
-│  7  │  7  │  7  │
-└─────┴─────┴─────┘
-
-Initial: max = 7
-
-i=1: 7 > 7? NO ✗ → max = 7
-i=2: 7 > 7? NO ✗ → max = 7
-
-Result: max = 7 ✅
-```
-
-### Case 3: Descending Order `[9, 7, 5, 3, 1]`
-```
-Array: [9, 7, 5, 3, 1]
-Index:  0  1  2  3  4
-
-┌─────┬─────┬─────┬─────┬─────┐
-│  9  │  7  │  5  │  3  │  1  │
-└─────┴─────┴─────┴─────┴─────┘
-
-Initial: max = 9
-
-All comparisons:
-7 > 9? NO ✗
-5 > 9? NO ✗  
-3 > 9? NO ✗
-1 > 9? NO ✗
-
-Result: max = 9 (first element) ✅
-```
-
-***
-
-## ⚡ Complexity Analysis
-
-### Time Complexity: **O(n)**
-- **Single Pass**: We traverse the array exactly once
-- **Constant Operations**: Each comparison takes O(1) time
-- **Linear Growth**: Time increases proportionally with array size
-- **Best/Average/Worst Case**: All O(n) - must check every element
-
-### Space Complexity: **O(1)**
-- **Constant Space**: Only one variable (`max`) needed
-- **No Extra Arrays**: No additional data structures required
-- **In-place Operation**: Original array remains unchanged
-- **Auxiliary Space**: Just the `max` variable = O(1)
-
-### Detailed Analysis:
-```
-Operations Breakdown:
-- Array access: n times  
-- Comparisons: n-1 times
-- Assignments: At most n times (worst case: ascending order)
-- Return: 1 time
-
-Total: O(n) time, O(1) space
-```
-
-***
-
-## 🚀 Approach Evolution: Brute Force to Optimal
-
-### 1. Sorting Approach (Inefficient)
-```cpp
-class SolutionSorting {
-public:
-    int largest(vector &arr) {
-        sort(arr.begin(), arr.end());
-        return arr[arr.size() - 1];
-    }
-};
-```
-- **Time Complexity**: O(n log n) - due to sorting
-- **Space Complexity**: O(1) or O(n) depending on sort implementation
-- **Why Inefficient?**: Unnecessary sorting when we only need maximum
-
-**Intuition**: "Sort everything and pick the last element"
-
-### 2. Using STL max_element (Library Approach)
-```cpp
-class SolutionSTL {
-public:
-    int largest(vector &arr) {
-        return *max_element(arr.begin(), arr.end());
-    }
-};
-```
-- **Time Complexity**: O(n) - internally does linear search
-- **Space Complexity**: O(1)
-- **Why Suboptimal?**: Depends on library, less control over implementation
-
-**Intuition**: "Use built-in function to find maximum"
-
-### 3. Recursive Approach (Functional Style)
-```cpp
-class SolutionRecursive {
-public:
-    int findMax(vector &arr, int n) {
-        // Base case
-        if (n == 1)
-            return arr[0];
-        
-        // Recursive case
-        return max(arr[n-1], findMax(arr, n-1));
-    }
-    
-    int largest(vector &arr) {
-        return findMax(arr, arr.size());
-    }
-};
-```
-- **Time Complexity**: O(n) - each element processed once
-- **Space Complexity**: O(n) - due to recursion stack
-- **Why Suboptimal?**: Extra space for recursion stack
-
-**Intuition**: "Break problem into smaller subproblems recursively"
-
-### 4. Optimal Iterative Solution ✅
 ```cpp
 class Solution {
 public:
-    int largest(vector &arr) {
-        int max_elem = arr[0];
+    bool check(vector<int>& nums) {
+        int n = nums.size();
+        int breaks = 0;
         
-        for (int i = 1; i  max_elem) {
-                max_elem = arr[i];
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > nums[(i + 1) % n]) {
+                breaks++;
+                if (breaks > 1) return false;
             }
         }
-        
-        return max_elem;
+        return true;
     }
 };
 ```
-- **Time Complexity**: O(n) - single pass through array
-- **Space Complexity**: O(1) - only one extra variable
-- **Why Optimal?**: Minimal operations, no extra space, direct solution
 
-**Intuition**: "Keep track of the best candidate seen so far"
+---
 
-***
+## 🔄 Algorithm
 
-## 💡 Intuition Behind the Solution
+1. Initialize `breaks = 0`
+2. Traverse the array:
 
-### The Core Insight:
-> "To find the largest element, we only need to remember the biggest number we've seen so far and compare it with each new number we encounter."
+   * Compare each element with its **next** (circularly using `% n`)
+   * If `nums[i] > nums[(i+1) % n]`, increment `breaks`
+3. If `breaks > 1` → return `false`
+4. Otherwise, return `true`
 
-### Mental Model - The Competition:
-Think of this like a competition where each array element is a contestant:
+---
+
+## 🏗️ Visual Diagram
+
+### Example: `[3,4,5,1,2]`
+
 ```
-Contestants: [2, 8, 3, 7, 1]
+Original: [1,2,3,4,5]
+Rotation: [3,4,5,1,2]
 
-Round 1: 2 wins (by default, first contestant)
-Round 2: 8 vs 2 → 8 wins! (new champion)
-Round 3: 3 vs 8 → 8 wins! (champion remains)
-Round 4: 7 vs 8 → 8 wins! (champion remains)  
-Round 5: 1 vs 8 → 8 wins! (final champion)
+Array: [3, 4, 5, 1, 2]
+Index:  0  1  2  3  4
 
-Result: 8 is the ultimate winner!
-```
+Check pairs:
+3 < 4 → ok
+4 < 5 → ok
+5 > 1 → break (count=1)
+1 < 2 → ok
+2 < 3 → ok (circular)
 
-### Key Realizations:
-
-1. **Single Champion Principle**:
-   - Only one "current maximum" needs to be maintained
-   - Every new element either beats the champion or doesn't
-
-2. **Linear Sufficiency**:
-   - We must see every element at least once
-   - No need to compare elements with each other, only with current max
-
-3. **Greedy Strategy**:
-   - Always keep the best candidate seen so far
-   - Make locally optimal choices (update when finding larger element)
-
-### Why This Works:
-
-**Theorem**: *Any element that is the true maximum of an array will eventually become the "current maximum" during a left-to-right traversal and will never be replaced.*
-
-**Proof Sketch**:
-- **Correctness**: True maximum is larger than all other elements
-- **Optimality**: Once we encounter the true maximum, no subsequent element can replace it
-- **Completeness**: Linear scan ensures we encounter every element
-
-### Visual Understanding:
-```
-Array: [3, 7, 2, 9, 1]
-Max tracking: 
-   3 → 7 → 7 → 9 → 9
-   ↑   ↑   ↑   ↑   ↑
-  max  new  same new same
- init  max   max  max  max
-
-Final: 9 (correct maximum)
+Total breaks = 1 → ✅ Valid
 ```
 
-***
+---
 
-## 🏆 Comparison Between Alternatives
+## 📊 Complexity Analysis
 
-### Comprehensive Comparison:
+* **Time Complexity** → O(n) (single traversal)
+* **Space Complexity** → O(1) (only counter variable)
 
-| Approach | Time | Space | Pros | Cons | Use Case |
-|----------|------|-------|------|------|----------|
-| **Iterative** | **O(n)** | **O(1)** | **Simple, Optimal, Clear** | **None** | **Always preferred** |
-| Sorting | O(n log n) | O(1)-O(n) | Easy to understand | Slower, overkill | When array needs sorting anyway |
-| STL max_element | O(n) | O(1) | One-liner, readable | Library dependency | Quick prototyping |
-| Recursive | O(n) | O(n) | Functional style | Stack overhead | Academic/functional programming |
-| Divide & Conquer | O(n) | O(log n) | Parallelizable | Complex implementation | Parallel processing scenarios |
+---
 
-### When to Use Each Approach:
+## 🪜 Approach Evolution
 
-**Iterative Solution** ✅:
-- **Production code**: Most reliable and efficient
-- **Interviews**: Demonstrates algorithmic thinking
-- **Large datasets**: Minimal memory overhead
-- **General purpose**: Works in all scenarios
+### 1️⃣ Brute Force (Try all rotations)
 
-**Sorting Approach**:
-- When you need both maximum and sorted array
-- Educational purposes to show inefficiency
-- One-time operations on small datasets
+```cpp
+class SolutionBrute {
+public:
+    bool check(vector<int>& nums) {
+        int n = nums.size();
+        for (int r = 0; r < n; r++) {
+            bool sorted = true;
+            for (int i = 0; i < n - 1; i++) {
+                if (nums[(i + r) % n] > nums[(i + r + 1) % n]) {
+                    sorted = false; break;
+                }
+            }
+            if (sorted) return true;
+        }
+        return false;
+    }
+};
+```
 
-**STL Approach**:
-- Rapid prototyping
-- Code readability is priority over control
-- Trust in standard library implementation
+* **Time Complexity** → O(n²)
+* **Space Complexity** → O(1)
 
-**Recursive Approach**:
-- Functional programming paradigms
-- Educational purposes (understanding recursion)
-- When stack space is abundant
+---
 
-This problem beautifully demonstrates that the simplest approach is often the most elegant and efficient! The iterative solution combines optimal time complexity with minimal space usage and maximum clarity. 🎯
+### 2️⃣ Sorting + Rotation Check
+
+```cpp
+class SolutionSorting {
+public:
+    bool check(vector<int>& nums) {
+        vector<int> sorted = nums;
+        sort(sorted.begin(), sorted.end());
+        int n = nums.size();
+        for (int r = 0; r < n; r++) {
+            bool match = true;
+            for (int i = 0; i < n; i++) {
+                if (nums[i] != sorted[(i + r) % n]) {
+                    match = false; break;
+                }
+            }
+            if (match) return true;
+        }
+        return false;
+    }
+};
+```
+
+* **Time Complexity** → O(n log n + n²)
+* **Space Complexity** → O(n)
+
+---
+
+### 3️⃣ Two-Pass Approach
+
+```cpp
+class SolutionTwoPass {
+public:
+    bool check(vector<int>& nums) {
+        int n = nums.size(), breaks = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (nums[i] > nums[i + 1]) breaks++;
+        }
+        if (nums[n - 1] > nums[0]) breaks++;
+        return breaks <= 1;
+    }
+};
+```
+
+* **Time Complexity** → O(n)
+* **Space Complexity** → O(1)
+
+---
+
+### 4️⃣ Optimal Single-Pass ✅
+
+```cpp
+class SolutionOptimal {
+public:
+    bool check(vector<int>& nums) {
+        int breaks = 0, n = nums.size();
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > nums[(i + 1) % n]) {
+                breaks++;
+                if (breaks > 1) return false;
+            }
+        }
+        return true;
+    }
+};
+```
+
+* **Time Complexity** → O(n)
+* **Space Complexity** → O(1)
+
+---
+
+## 💡 Intuition
+
+* A sorted + rotated array can have **at most one break point** where `nums[i] > nums[i+1]`.
+* If **0 breaks** → already sorted.
+* If **1 break** → valid rotation.
+* If **>1 breaks** → not possible.
+
+👉 Think of the array as a **circular clock**: numbers increase until a single drop, then wrap around.
+
+---
+
+## ⚔️ Comparison of Approaches
+
+| Approach             | Time        | Space | Pros               | Cons           |
+| -------------------- | ----------- | ----- | ------------------ | -------------- |
+| Brute Force          | O(n²)       | O(1)  | Simple idea        | Very slow      |
+| Sorting + Check      | O(n²+nlogn) | O(n)  | Intuitive          | Memory heavy   |
+| Two Pass             | O(n)        | O(1)  | Easy to reason     | Slightly extra |
+| **Optimal (Chosen)** | **O(n)**    | O(1)  | Clean, efficient ✅ | None           |
+
+---
+
+## 🎯 Takeaway
+
+This problem looks tricky, but the **key is recognizing the single-break property**. Once that’s clear, the solution becomes an elegant **O(n), O(1)** check.
