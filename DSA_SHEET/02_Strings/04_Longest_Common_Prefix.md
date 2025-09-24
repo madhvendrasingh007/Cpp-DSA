@@ -58,7 +58,7 @@ public:
         // Start with the first string as initial prefix
         string prefix = strs[0];
         
-        // Compare prefix with each subsequent string
+        // Compare  prefix with each subsequent string
         for (int i = 1; i < strs.size(); i++) {
             // If any string is empty, LCP must be ""
             if (strs[i].empty()) return "";
